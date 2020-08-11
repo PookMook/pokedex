@@ -1,0 +1,33 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "Pokedex GraphQL endpoint using Graph Object Notation",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PookMook/pokedex.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PookMook/pokedex/issues"
+  },
+  "homepage": "https://github.com/PookMook/pokedex#readme",
+  "dependencies": {
+    "graph-object-notation": "^0.1.6",
+    "next": "^9.5.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "@types/react": "^16.9.46"
+  }
+}
