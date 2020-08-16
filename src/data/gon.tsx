@@ -10,6 +10,8 @@ import {
   AttackPerName,
 } from "~/types";
 
+//const data = JSON.parse(JSON.stringify(json));
+
 // Create types
 const typesPerType: TypePerType = {};
 

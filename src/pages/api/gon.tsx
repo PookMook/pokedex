@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { stringify } from "graph-object-notation";
+import gon from "~/data/pokemonsGon";
+/* import { stringify } from "graph-object-notation";
 import {
   pokemons,
   types,
@@ -8,25 +9,24 @@ import {
   attacksPerName,
   pokemonPerId,
   pokemonPerName,
-} from "~/data/gon";
+} from "~/data/gon"; */
 
 export default function Gon(req: NextApiRequest, res: NextApiResponse) {
-  // This will crash cause of the circular structure
-  // return res.json(pokemons)
-  // import GON.stringify and send GON string out
-  return res.send(
-    stringify(
-      {
-        pokemons,
-        types,
-        attacks,
-        typesPerType,
-        attacksPerName,
-        pokemonPerId,
-        pokemonPerName,
-      },
-      null,
-      1
-    )
-  );
+  /*
+ ==== 
+ Used to generate ~/data/pokemonGon.ts
+ Not live atm because of sideEffect of the stringify function
+
+   return res.send(
+    stringify({
+      pokemons,
+      types,
+      attacks,
+      typesPerType,
+      attacksPerName,
+      pokemonPerId,
+      pokemonPerName,
+    })
+  ); */
+  res.send(gon);
 }

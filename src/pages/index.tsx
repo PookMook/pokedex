@@ -10,7 +10,8 @@ export default function Home() {
     fetch("/api/gon")
       .then((r) => r.text())
       .then((r) => {
-        const pokemons: Pokemon[] = parse(r).data.pokemons;
+        const parsed = parse(r);
+        const { pokemons }: { pokemons: Pokemon[] } = parsed.data;
         setPokemons(pokemons);
       });
   }, []);
@@ -18,12 +19,14 @@ export default function Home() {
   return (
     <>
       <h1>Pokedex</h1>
-      {pokemons && (
+      {pokemons !== null ? (
         <ul>
-          {pokemons.map((p: Pokemon) => (
+          {pokemons.map((p) => (
             <li key={p.name}>{p.name}</li>
           ))}
         </ul>
+      ) : (
+        <p>loading</p>
       )}
     </>
   );
