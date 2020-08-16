@@ -87,12 +87,12 @@ const pokemons: Pokemon[] = Object.values(pokemonPerId);
 
 // All entities are created, let's populate the edges of the graph
 data.forEach((p) => {
-  p.weaknesses.forEach((w) => {
+  /*   p.weaknesses.forEach((w) => {
     typesPerType[w]["effectiveAgainst"].push(pokemonPerName[p.name]);
   });
   p.resistant.forEach((r) => {
     typesPerType[r]["weakAgainst"].push(pokemonPerName[p.name]);
-  });
+  }); */
 
   if (p.evolutions) {
     pokemonPerName[p.name]["evolutions"] = p.evolutions.map(
