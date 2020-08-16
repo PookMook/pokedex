@@ -1,15 +1,24 @@
-import React from "react";
-import { GetStaticProps } from "next";
+import React, { useState, useEffect } from "react";
 import { parse } from "graph-object-notation";
 
 import { Pokemon } from "~/types";
 
-export default function Home({ gon }: { gon: string }) {
-  const { pokemons } = parse(gon).data;
+export default function Home() {
+  const [pokemons, setPokemons] = useState<Pokemon[] | null>(null);
+
+  useEffect(() => {
+    fetch("/api/gon")
+      .then((r) => r.text())
+      .then((r) => {
+        const pokemons: Pokemon[] = parse(r).data.pokemons;
+        setPokemons(pokemons);
+      });
+  }, []);
+
   return (
     <>
       <h1>Pokedex</h1>
-      {true && (
+      {pokemons && (
         <ul>
           {pokemons.map((p: Pokemon) => (
             <li key={p.name}>{p.name}</li>
@@ -19,10 +28,3 @@ export default function Home({ gon }: { gon: string }) {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const gon: string = await fetch("http://localhost:3000/api/gon").then((r) =>
-    r.text()
-  );
-  return { props: { gon } };
-};
