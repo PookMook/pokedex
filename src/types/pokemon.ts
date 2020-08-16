@@ -36,3 +36,7 @@ export type Pokemon = {
     special: Attack[];
   };
 };
+
+export interface PokemonPerName {
+  [key: string]: Pokemon | undefined;
+}

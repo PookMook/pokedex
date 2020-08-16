@@ -6,8 +6,8 @@ import {
   attacks,
   typesPerType,
   attacksPerName,
-  pokemonsPerId,
-  pokemonsPerName,
+  pokemonPerId,
+  pokemonPerName,
 } from "~/data/gon";
 
 export default function Gon(req: NextApiRequest, res: NextApiResponse) {
@@ -22,8 +22,8 @@ export default function Gon(req: NextApiRequest, res: NextApiResponse) {
         attacks,
         typesPerType,
         attacksPerName,
-        pokemonsPerId,
-        pokemonsPerName,
+        pokemonPerId,
+        pokemonPerName,
       },
       null,
       1

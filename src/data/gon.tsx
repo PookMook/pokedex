@@ -1,9 +1,17 @@
 import data from "~/data/pokemons.json";
 
-import { Pokemon, Type, Attack } from "~/types";
+import {
+  Pokemon,
+  PokemonPerName,
+  PokemonPerId,
+  Type,
+  TypePerType,
+  Attack,
+  AttackPerName,
+} from "~/types";
 
 // Create types
-const typesPerType = {};
+const typesPerType: TypePerType = {};
 
 data.forEach((p) => {
   p.types.forEach((t) => {
@@ -14,7 +22,7 @@ data.forEach((p) => {
 const types: Type[] = Object.values(typesPerType);
 
 // Create attacks
-let attacksPerName = {
+let attacksPerName: AttackPerName = {
   // Tackle : {name:"Tackle", type: types.Normal, damage:12 }
 };
 
@@ -29,12 +37,12 @@ data.forEach((p) => {
 const attacks: Attack[] = Object.values(attacksPerName);
 
 // Create pokemons
-let pokemonsPerName = {};
-let pokemonsPerId = {};
+let pokemonPerName: PokemonPerName = {};
+let pokemonPerId: PokemonPerId = {};
 // Bulbasaur : {...Pokemon}
 
 data.forEach((p) => {
-  pokemonsPerName[p.name] = {
+  pokemonPerName[p.name] = {
     id: Number(p.id),
     name: p.name,
     classification: p.classification,
@@ -65,17 +73,21 @@ data.forEach((p) => {
       special: p.attacks.special.map((s) => attacksPerName[s.name]),
     },
   };
-  pokemonsPerId[Number(p.id)] = pokemonsPerName[p.name];
+  pokemonPerId[Number(p.id)] = pokemonPerName[p.name];
 });
-const pokemons: Pokemon[] = Object.values(pokemonsPerId);
+const pokemons: Pokemon[] = Object.values(pokemonPerId);
 
 data.forEach((p) => {
-  pokemonsPerName[p.name]["evolutions"] = p.evolutions?.map(
-    (e) => pokemonsPerName[e.name]
-  );
-  pokemonsPerName[p.name]["previousEvolutions"] = p[
-    "Previous evolution(s)"
-  ]?.map((e) => pokemonsPerName[e.name]);
+  if (p.evolutions) {
+    pokemonPerName[p.name]["evolutions"] = p.evolutions.map(
+      (e) => pokemonPerName[e.name]
+    );
+  }
+  if (p["Previous evolution(s)"]) {
+    pokemonPerName[p.name]["previousEvolutions"] = p[
+      "Previous evolution(s)"
+    ].map((e) => pokemonPerName[e.name]);
+  }
 });
 
 export {
@@ -84,6 +96,6 @@ export {
   attacks,
   typesPerType,
   attacksPerName,
-  pokemonsPerId,
-  pokemonsPerName,
+  pokemonPerId,
+  pokemonPerName,
 };
