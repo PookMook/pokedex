@@ -1,9 +1,11 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import { stringify } from "graph-object-notation";
 import data from "~/data/pokemons.json";
 
-// in cm
+// in m
 type Height = string;
 
-// in g
+// in kg
 type Weight = string;
 type Type = {
   name: string;
@@ -51,6 +53,7 @@ data.forEach((p) => {
     typesPerType[t] = { name: t };
   });
 });
+
 const types: Type[] = Object.values(typesPerType);
 
 // Create attacks
@@ -62,15 +65,19 @@ data.forEach((p) => {
   p.attacks.fast.forEach((f) => {
     attacksPerName[f.name] = { ...f, type: typesPerType[f.type] };
   });
+  p.attacks.special.forEach((s) => {
+    attacksPerName[s.name] = { ...s, type: typesPerType[s.type] };
+  });
 });
 const attacks: Attack[] = Object.values(attacksPerName);
 
 // Create pokemons
-let pokemonsPerName = [];
+let pokemonsPerName = {};
+let pokemonsPerId = {};
 // Bulbasaur : {...Pokemon}
 
 data.forEach((p) => {
-  const thisPokemon = {
+  pokemonsPerName[p.name] = {
     id: Number(p.id),
     name: p.name,
     classification: p.classification,
@@ -101,8 +108,36 @@ data.forEach((p) => {
       special: p.attacks.special.map((s) => attacksPerName[s.name]),
     },
   };
+  pokemonsPerId[Number(p.id)] = pokemonsPerName[p.name];
+});
+const pokemons: Pokemon[] = Object.values(pokemonsPerId);
+
+data.forEach((p) => {
+  pokemonsPerName[p.name]["evolutions"] = p.evolutions?.map(
+    (e) => pokemonsPerName[e.name]
+  );
+  pokemonsPerName[p.name]["previousEvolutions"] = p[
+    "Previous evolution(s)"
+  ]?.map((e) => pokemonsPerName[e.name]);
 });
 
-export default function Gon(req, res) {
-  return res.json(data);
+export default function Gon(req: NextApiRequest, res: NextApiResponse) {
+  // This will crash cause of the circular structure
+  // return res.json(pokemons)
+  // import GON.stringify and send GON string out
+  return res.send(
+    stringify(
+      {
+        pokemons,
+        types,
+        attacks,
+        typesPerType,
+        attacksPerName,
+        pokemonsPerId,
+        pokemonsPerName,
+      },
+      null,
+      1
+    )
+  );
 }
