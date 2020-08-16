@@ -1,4 +1,13 @@
-export default type Pokemon = {
+import { Type } from "./type";
+import { Attack } from "./attack";
+
+// in m
+type Height = string;
+
+// in kg
+type Weight = string;
+
+export type Pokemon = {
   id: number;
   name: string;
   classification: string;
