@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.0.27",
-    "@types/react": "^16.9.46"
+    "@types/react": "^16.9.46",
+    "raw-loader": "^4.0.1"
   }
 }
