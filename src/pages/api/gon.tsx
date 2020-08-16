@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import gon from "~/data/pokemons.gon";
+import gon from "!!raw-loader!~/data/pokemons.gon";
 /* import { stringify } from "graph-object-notation";
 import {
   pokemons,
