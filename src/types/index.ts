@@ -13,3 +13,4 @@ export type AttackPerName = Record<string, AttackImport>;
 
 export type Type = TypeImport;
 export type TypePerType = Record<string, TypeImport>;
+export type HtmlElementString = "article" | "li";
