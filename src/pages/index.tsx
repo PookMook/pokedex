@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { parse } from "graph-object-notation";
 
 import { Pokemon } from "~/types";
+import PokemonDisplay from "~/components/pokemons/index";
 
 export default function Home() {
   const [pokemons, setPokemons] = useState<Pokemon[] | null>(null);
@@ -22,7 +23,7 @@ export default function Home() {
       {pokemons !== null ? (
         <ul>
           {pokemons.map((p) => (
-            <li key={p.name}>{p.name}</li>
+            <PokemonDisplay pokemon={p} key={p.name} />
           ))}
         </ul>
       ) : (
